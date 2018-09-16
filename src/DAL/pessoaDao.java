@@ -37,7 +37,25 @@ public class pessoaDao implements intPessoaDao
     @Override
     public void EditarPessoa(Pessoa pessoa)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.mensagem = "";
+        try
+        {
+            Connection conexao = Conexao.Conectar();
+            String instrucaoSql = "Update Pessoas set nome= ?, rg= ?, cpf= ? where id = ?";
+            PreparedStatement prm = conexao.prepareStatement(instrucaoSql);
+            prm.setString(1, pessoa.nome);
+            prm.setString(2, pessoa.rg);
+            prm.setString(3, pessoa.cpf);
+            prm.setInt(4, pessoa.id);
+            prm.execute();
+            Conexao.Desconectar();
+            this.mensagem = "Pessoa Editada com sucesso!";
+        }
+        catch (SQLException e)
+        {
+            this.mensagem = Conexao.mensagem + e.getMessage();
+        }
+
     }
 
     @Override
@@ -48,7 +66,7 @@ public class pessoaDao implements intPessoaDao
 
     @Override
     public Pessoa PesquisarPessoaPorId(Pessoa pessoa)
-{
+    {
         this.mensagem = "";
         try
         {
@@ -58,10 +76,11 @@ public class pessoaDao implements intPessoaDao
             PreparedStatement prm = conexao.prepareStatement(instrucaoSql);
             prm.setInt(1, pessoa.id);
             ResultSet result = prm.executeQuery();
-            if(result.next()){
-                pessoa.nome=result.getString("nome");
-                pessoa.rg=result.getString("rg");
-                pessoa.cpf=result.getString("cpf");
+            if (result.next())
+            {
+                pessoa.nome = result.getString("nome");
+                pessoa.rg = result.getString("rg");
+                pessoa.cpf = result.getString("cpf");
             }
             Conexao.Desconectar();
         }
@@ -69,7 +88,7 @@ public class pessoaDao implements intPessoaDao
         {
             this.mensagem = Conexao.mensagem + e.getMessage();
         }
-        return pessoa; 
+        return pessoa;
     }
 
     @Override
