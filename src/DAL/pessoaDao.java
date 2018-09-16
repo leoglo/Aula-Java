@@ -61,7 +61,21 @@ public class pessoaDao implements intPessoaDao
     @Override
     public void ExcluirPessoa(Pessoa pessoa)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.mensagem = "";
+        try
+        {
+            Connection conexao = Conexao.Conectar();
+            String instrucaoSql = "Delete Pessoas where id = ?";
+            PreparedStatement prm = conexao.prepareStatement(instrucaoSql);
+            prm.setInt(1,pessoa.id);
+            prm.execute();
+            Conexao.Desconectar();
+            this.mensagem = "pessoa excluida com Sucesso";
+        }
+        catch(SQLException e)
+        {
+        this.mensagem = Conexao.mensagem + e.getMessage();
+        }
     }
 
     @Override
@@ -81,6 +95,9 @@ public class pessoaDao implements intPessoaDao
                 pessoa.nome = result.getString("nome");
                 pessoa.rg = result.getString("rg");
                 pessoa.cpf = result.getString("cpf");
+            }
+            else{
+                this.mensagem = "Id não existe";
             }
             Conexao.Desconectar();
         }

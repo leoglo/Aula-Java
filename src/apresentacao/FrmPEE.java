@@ -69,6 +69,13 @@ public class FrmPEE extends javax.swing.JDialog
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener()
@@ -164,11 +171,22 @@ public class FrmPEE extends javax.swing.JDialog
         DadosPessoa.add(txtCPF.getText());
         Controle controle = new Controle();
         controle.EditarPessoa(DadosPessoa);
-        
+
         JOptionPane.showMessageDialog(null, controle.mensagem);
-        
+
 
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnExcluirActionPerformed
+    {//GEN-HEADEREND:event_btnExcluirActionPerformed
+        List<String> DadosPessoa = new ArrayList<>();
+        DadosPessoa.add(txtID.getText());
+        Controle controle = new Controle();
+        controle.ExcluirPessoa(DadosPessoa);
+        
+        JOptionPane.showMessageDialog(null, controle.mensagem);
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments

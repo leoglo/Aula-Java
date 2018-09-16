@@ -32,6 +32,8 @@ public class Controle
 
     public Pessoa PesquisarPessoaporId(List<String> DadosPessoa)
     {
+        this.mensagem = "";
+
         Validacao validacao = new Validacao();
         Pessoa pessoa = new Pessoa();
         validacao.ValidarPesquisaPorId(DadosPessoa);
@@ -65,6 +67,33 @@ public class Controle
             DAL.pessoaDao pessoadao = new DAL.pessoaDao();
             pessoadao.EditarPessoa(pessoa);
             this.mensagem = pessoadao.mensagem;
+        }
+        else
+        {
+            this.mensagem = validacao.Mensagem;
+        }
+    }
+
+    public void ExcluirPessoa(List<String> DadosPessoa)
+    {
+        this.mensagem = "";
+
+        Validacao validacao = new Validacao();
+        validacao.ValidarPesquisaPorId(DadosPessoa);
+        if (validacao.Mensagem.equals(""))
+        {
+            Pessoa pessoa = new Pessoa();
+            pessoa.id = validacao.id;
+            if (this.PesquisarPessoaporId(DadosPessoa).nome != null)
+            {
+                DAL.pessoaDao pessoadao = new pessoaDao();
+                pessoadao.ExcluirPessoa(pessoa);
+                this.mensagem = pessoadao.mensagem;
+            }
+            else
+            {
+                this.mensagem = "Esse Id não existe";
+            }
         }
         else
         {
