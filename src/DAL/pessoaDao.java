@@ -48,8 +48,28 @@ public class pessoaDao implements intPessoaDao
 
     @Override
     public Pessoa PesquisarPessoaPorId(Pessoa pessoa)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+{
+        this.mensagem = "";
+        try
+        {
+            Connection conexao = Conexao.Conectar();
+            String instrucaoSql = "Select * From "
+                    + "Pessoas where id = ?";
+            PreparedStatement prm = conexao.prepareStatement(instrucaoSql);
+            prm.setInt(1, pessoa.id);
+            ResultSet result = prm.executeQuery();
+            if(result.next()){
+                pessoa.nome=result.getString("nome");
+                pessoa.rg=result.getString("rg");
+                pessoa.cpf=result.getString("cpf");
+            }
+            Conexao.Desconectar();
+        }
+        catch (SQLException e)
+        {
+            this.mensagem = Conexao.mensagem + e.getMessage();
+        }
+        return pessoa; 
     }
 
     @Override

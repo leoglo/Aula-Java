@@ -81,7 +81,8 @@ public class FrmPrincipal extends javax.swing.JDialog
 
     private void menuPEEActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuPEEActionPerformed
     {//GEN-HEADEREND:event_menuPEEActionPerformed
-        // TODO add your handling code here:
+        FrmPEE pee = new FrmPEE(null, true);
+        pee.setVisible(true);
     }//GEN-LAST:event_menuPEEActionPerformed
 
     private void menuCadastrarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuCadastrarActionPerformed
